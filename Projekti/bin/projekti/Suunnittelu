@@ -1,4 +1,9 @@
 
-Tietovisa joka laskee pisteitä
-20 kysymystä isommasta kysymysaltaasta
-Vastausvaihtoehdot a,b,c joilla myöskin vastataan
+Tietovisa, joka laskee pisteitä oikeista kysymyksistä
+20 kysymystä arvotaan satunnaisessa järjestyksessä isommasta kysymyspatteristosta. Ei kysy samoja kysymyksiä samal-la suorituskerralla.
+Vastausvaihtoehdot a, b, c, joilla myöskin vastataan.
+
+Ohjelman täytyy pystyä hakemaan kysymyksiä tiedostosta ja niiden oikeat vastaukset.
+Ohjelman täytyy pystyä arpomaan niiden järjestys myöskin.
+Ohjelman täytyy laskea pisteitä oikeista vastauksista ja tulostaa ne ennen kuin ohjelma päättyy
+
