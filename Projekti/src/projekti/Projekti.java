@@ -1,10 +1,12 @@
 package projekti;
 
 import java.util.Scanner;
+import java.util.Random;
 
 public class Projekti {
 	public static void main(String[] args) {
 		Scanner lukija = new Scanner(System.in);
+	    Random random = new Random();
 		String nimi = "";
 
 		while (true) {
@@ -72,7 +74,7 @@ public class Projekti {
 		int oikein = 0;
 
 		while (true) {
-			if (kysytty <= 20) {
+			if (kysytty >= 20) {
 				break;
 			} else {
 				kysymys();
@@ -88,18 +90,15 @@ public class Projekti {
 		laskuri();
 	}
 
-	private static void laskuri() {
-		// TODO Auto-generated method stub
-		
-	}
 
-	public static void laskuri(int kysytty, int oikein, String tulos) {
+
+	public static int laskuri(int kysytty, int oikein, String tulos) {
 		kysytty++;
 		if (tulos.equals("Oikein")) {
 			oikein++;
 		}
-		;
-		return;
+		
+		return kysytty + oikein;
 	}
 
 	public static void lopputekstit(int oikein) {
