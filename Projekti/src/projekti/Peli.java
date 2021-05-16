@@ -35,7 +35,7 @@ public class Peli {
 						continue;
 					}
 					System.out.println("Hei " + nimi
-							+ "! Seuraavaksi esitet‰‰n 20 kysymyst‰. Vastaa kirjaimilla a, b, c tai d. Onnea peliin"
+							+ "! Seuraavaksi esitet‰‰n 20 kysymyst‰. Vastaa kirjaimilla a, b, tai c. Onnea peliin"
 							+ "\n");
 					peli();
 					break;
@@ -62,7 +62,7 @@ public class Peli {
 
 				} else if (vastaus.equalsIgnoreCase("joo")) {
 					System.out.println("Peli alkaa taas " + nimi
-							+ ". Seuraavaksi esitet‰‰n 20 kysymyst‰. Vastaa kirjaimilla a, b, c tai d. Onnea peliin"
+							+ ". Seuraavaksi esitet‰‰n 20 kysymyst‰. Vastaa kirjaimilla a, b, tai c. Onnea peliin"
 							+ "\n");
 					peli();
 
@@ -72,7 +72,7 @@ public class Peli {
 				}
 
 			}
-		System.out.println("Hyv‰sti!");
+		System.out.println("N‰kemiin!");
 		lukija.close();
 	}
 
@@ -80,24 +80,37 @@ public class Peli {
 		Scanner lukija = new Scanner(System.in);
 		int pisteet = 0;
 		int kysytty = 0;
+		String pelaajanVastaus = "";
 
 		haeKysymykset tietokilpailu = new haeKysymykset();
 
-		for (kysymys kysymyss : tietokilpailu.getkysymysLista()) {
-			System.out.println(kysymyss);
+		for (kysymys kysyttava : tietokilpailu.getkysymysLista()) {
+			System.out.println(kysyttava);
 			System.out.println("Mik‰ on vastauksesi?");
-			String pelaajanVastaus = lukija.nextLine();
 
-			if (pelaajanVastaus.equalsIgnoreCase(kysymyss.vastaus)) {
+			while (true) {
+				pelaajanVastaus = lukija.nextLine();
+
+				if (pelaajanVastaus.equalsIgnoreCase("a") || pelaajanVastaus.equalsIgnoreCase("b")
+						|| pelaajanVastaus.equalsIgnoreCase("c")) {
+					break;
+
+				} else
+					System.out.println("Vastaa kirjaimilla a, b, tai c.");
+				continue;
+
+			}
+
+			if (pelaajanVastaus.equalsIgnoreCase(kysyttava.vastaus)) {
 				System.out.println("Vastasit oikein" + "\n");
 				pisteet = pisteet + 1;
 			} else {
-				System.out.println("V‰‰r‰ vastaus" + "\n");
+				System.out.println("Vaustauksesi oli v‰‰r‰" + "\n");
 			}
 
 			kysytty = kysytty + 1;
 
-			if (kysytty == 3) {
+			if (kysytty == 20) {
 				break;
 			}
 			System.out.println("Seuraava kysymys:" + "\n");
@@ -126,7 +139,7 @@ class haeKysymykset {
 
 	public haeKysymykset() {
 		try {
-			FileInputStream file = new FileInputStream("./kys.txt");
+			FileInputStream file = new FileInputStream("./Kysymykset.txt");
 			InputStreamReader isr = new InputStreamReader(file, StandardCharsets.UTF_8);
 			BufferedReader tiedostonLukija = new BufferedReader(isr);
 			Scanner lueTiedosto = new Scanner(tiedostonLukija);
@@ -134,7 +147,7 @@ class haeKysymykset {
 			String rivi;
 			String kysymys = "";
 
-			String[] vaihtoehdot = new String[4];
+			String[] vaihtoehdot = new String[3];
 			String vastaus = "";
 			int apu = 0;
 
@@ -149,7 +162,7 @@ class haeKysymykset {
 					} else if (rivi.contains(")")) { // stores the alternatives
 						vaihtoehdot[apu++] = rivi;
 
-					} else if (Character.isAlphabetic(rivi.indexOf(0)) || apu == 4) { // Stores the
+					} else if (Character.isAlphabetic(rivi.indexOf(0)) || apu == 3) { // Stores the
 																						// vastaus
 						vastaus = String.valueOf(rivi);
 					}
@@ -160,7 +173,7 @@ class haeKysymykset {
 				kysymysLista.add(new kysymys(kysymys, vaihtoehdot, vastaus));
 				apu = 0;
 				vastaus = "";
-				vaihtoehdot = new String[4];
+				vaihtoehdot = new String[3];
 
 			} while (lueTiedosto.hasNext());
 
