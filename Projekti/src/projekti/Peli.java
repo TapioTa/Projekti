@@ -15,7 +15,7 @@ public class Peli {
 		String nimi = "";
 		String vastaus = "";
 
-		while (true) {
+		while (true) { // Loopataan kunnes saadaan vastaus joo tai ei
 			System.out.println("Haluatko pelata? (joo/ei)");
 			vastaus = lukija.nextLine();
 
@@ -27,14 +27,14 @@ public class Peli {
 			if (vastaus.equalsIgnoreCase("joo")) {
 				while (true) {
 
-					System.out.println("Mik‰ on nimesi?");
+					System.out.println("Mik‰ on nimesi?"); // Loopataan kunnes saadaan edes joku kirjain nimeksi
 					nimi = lukija.nextLine();
 
 					if (nimi.isBlank()) {
 						System.out.println("Nimesi on tyhj‰..." + "\n");
 						continue;
 					}
-					System.out.println("Hei " + nimi
+					System.out.println("Hei " + nimi // Esitell‰‰n peli‰ ja k‰ynnistet‰‰n peli
 							+ "! Seuraavaksi esitet‰‰n 20 kysymyst‰. Vastaa kirjaimilla a, b, tai c. Onnea peliin"
 							+ "\n");
 					peli();
@@ -44,7 +44,10 @@ public class Peli {
 			}
 
 			{
-				System.out.println("En ymm‰rt‰nyt vastausta. Kokeile uudelleen" + "\n");
+				System.out.println("En ymm‰rt‰nyt vastausta. Kokeile uudelleen" + "\n"); // Jos ensimm‰iseen kysymykseen
+																							// ei vastata joo/ei niin
+																							// tulee t‰m‰ ja palataan
+																							// alkuun
 				continue;
 			}
 
@@ -53,7 +56,7 @@ public class Peli {
 		if (vastaus.equalsIgnoreCase("ei")) {
 
 		} else
-			while (true) {
+			while (true) { //t‰h‰n p‰‰dyt‰‰n pelin j‰lkeen ja voidaan p‰‰tt‰‰ pelataanko uudelleen vai ei.
 				System.out.println("Haluatko pelata uudelleen? (joo/ei)");
 				vastaus = lukija.nextLine();
 
@@ -76,7 +79,7 @@ public class Peli {
 		lukija.close();
 	}
 
-	public static void peli() {
+	public static void peli() { // peli metodi
 		Scanner lukija = new Scanner(System.in);
 		int pisteet = 0;
 		int kysytty = 0;
@@ -84,14 +87,22 @@ public class Peli {
 
 		haeKysymykset tietokilpailu = new haeKysymykset();
 
-		for (kysymys kysyttava : tietokilpailu.getkysymysLista()) {
+		for (kysymys kysyttava : tietokilpailu.getkysymysLista()) { // looppaa listalta kysymyksi‰ kunnes kysytty 20
+																	// kysymyst‰ ja sitten if lauseke lopussa lopettaa
+																	// loopin
 			System.out.println(kysyttava);
 			System.out.println("Mik‰ on vastauksesi?");
 
 			while (true) {
 				pelaajanVastaus = lukija.nextLine();
 
-				if (pelaajanVastaus.equalsIgnoreCase("a") || pelaajanVastaus.equalsIgnoreCase("b")
+				if (pelaajanVastaus.equalsIgnoreCase("a") || pelaajanVastaus.equalsIgnoreCase("b") // tarkistaa, ett‰
+																									// onhan pelaaja
+																									// vastannu a, b tai
+																									// c kirjaimella.
+																									// Jos ei ole niin
+																									// pyyt‰‰ syˆtt‰m‰‰n
+																									// uudelleen
 						|| pelaajanVastaus.equalsIgnoreCase("c")) {
 					break;
 
@@ -101,7 +112,9 @@ public class Peli {
 
 			}
 
-			if (pelaajanVastaus.equalsIgnoreCase(kysyttava.vastaus)) {
+			if (pelaajanVastaus.equalsIgnoreCase(kysyttava.vastaus)) { // tarkistaa onko vastaus oikein. Jos on +1 ja
+																		// eteenp‰in jos ei ole vastaus oikein menn‰‰n
+																		// eteenp‰in
 				System.out.println("Vastasit oikein" + "\n");
 				pisteet = pisteet + 1;
 			} else {
@@ -117,11 +130,12 @@ public class Peli {
 
 		}
 
-		lopputekstit(pisteet);
+		lopputekstit(pisteet); // vie pisteet lopputekstit metodiin
 
 	}
 
-	public static void lopputekstit(int oikein) {
+	public static void lopputekstit(int oikein) { // kun 20 kysymyst‰ on esitetty oikein vastausten m‰‰r‰ tulee t‰h‰n
+													// metodiin ja tulostetaan halutunlainen vastaus
 		if (oikein == 0) {
 			System.out.println("Et saanut yht‰‰n oikeaa vastausta. Parempi onni ensikerralla");
 		} else if (oikein == 20) {
@@ -133,7 +147,7 @@ public class Peli {
 
 }
 
-class haeKysymykset {
+class haeKysymykset { // hakee kysymykset, vaihtoehdot ja vastaukset ja tekee niist‰ arraylistin
 
 	private ArrayList<kysymys> kysymysLista = new ArrayList<>();
 
@@ -147,7 +161,7 @@ class haeKysymykset {
 			String rivi;
 			String kysymys = "";
 
-			String[] vaihtoehdot = new String[3];
+			String[] vaihtoehdot = new String[3]; //m‰‰rittelee, ett‰ lˆytyy 3 vastausvaihtoehtoa
 			String vastaus = "";
 			int apu = 0;
 
@@ -159,23 +173,27 @@ class haeKysymykset {
 					if (rivi.contains("?")) { // etsii ? ja varastoi sen kysymyksen‰
 						kysymys = rivi;
 
-					} else if (rivi.contains(")")) { // stores the alternatives
+					} else if (rivi.contains(")")) { // etsii vaihtoehdot ) merkki‰ hyˆdynt‰en ja varastoi ne
+														// vaihtoehtoina
 						vaihtoehdot[apu++] = rivi;
 
-					} else if (Character.isAlphabetic(rivi.indexOf(0)) || apu == 3) { // Stores the
-																						// vastaus
+					} else if (Character.isAlphabetic(rivi.indexOf(0)) || apu == 3) { // varastoi vastausksen
+
 						vastaus = String.valueOf(rivi);
 					}
 
 				}
 
 				while (vastaus == "");
-				kysymysLista.add(new kysymys(kysymys, vaihtoehdot, vastaus));
+				kysymysLista.add(new kysymys(kysymys, vaihtoehdot, vastaus)); // lis‰‰ haetut tiedot taulukkoon ja
+																				// nollaa avustavat tiedot ja palaa
+																				// takaisin alkuun hakemaan seuraavaa
+																				// kysymyst‰
 				apu = 0;
 				vastaus = "";
 				vaihtoehdot = new String[3];
 
-			} while (lueTiedosto.hasNext());
+			} while (lueTiedosto.hasNext()); // looppaa kunnes ei ole en‰‰ luottavia rivej‰
 
 			file.close();
 			tiedostonLukija.close();
@@ -186,13 +204,13 @@ class haeKysymykset {
 	}
 
 	public ArrayList<kysymys> getkysymysLista() {
-		Collections.shuffle(kysymysLista);
+		Collections.shuffle(kysymysLista); // sekottaa kysymysten j‰rjestyksen. Eli sekoittaa arraylistin
 		return kysymysLista;
 	}
 
 }
 
-class kysymys {
+class kysymys { // muotoilee kysymyksen ja vastausvaihtoehdot valmiiksi rimpsuksi peli metodille
 
 	private String kysymys;
 	private String[] vaihtoehdot;
